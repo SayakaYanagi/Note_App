@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>MemoApp</title>
+</head>
+<body>
+
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+        }
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            color: #3468C0;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border-bottom: 1px solid black;
+            padding: 8px;
+            
+        }
+        th {
+        background-color: #86A7FC;
+        color: white;
+        }
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 150px; /* Set width for the date column */
+            text-align: center;
+        }
+        .delete-button {
+            width: 80px; /* Adjust the width*/
+            height: 40px; /* Adjust the height*/
+            background-color: #FF9843;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        textarea, button {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 80%;
+            max-width: 500px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        button {
+            background-color: #FF9843;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+    
+    <h1>Memo</h1>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Content</th>
+        </tr>
+        {% for memo in memos %}
+            <tr>
+                <td>{{ memo.date }}</td>
+                <td>{{ memo.title}}</td>
+                <td>{{ memo.memo }}</td>
+                <td><form action="{{ url_for('delete_row', row_id = memo._id)}}">
+                    <input type="submit" value="Delete" />
+                </form></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <form action = "{{ url_for('create_note')}}", method="post"> <!--POST request to the url difined in create_note()-->
+        <br>
+        <textarea name="new_memo_title"
+                placeholder="Memo title"
+                rows="2"
+                cols="20"
+                ></textarea>
+        <textarea name="new_memo_contents"
+                placeholder="Memo contents"
+                rows="5"
+                cols="100"
+                ></textarea>
+        <button type="submit">Add new memo</button>
+        <br>
+    </form>
+</body>
+</html>
